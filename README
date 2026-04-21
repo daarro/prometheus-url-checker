@@ -1,3 +1,3 @@
-- App exposes three example metrics for each URL: response latency, request success counter, request failure counter and request response code
+- App exposes three example metrics for each URL specified in configmap: response latency, request success counter, request failure counter and request response code
 - Metrics exposed in container on port 8000
-- Exposed in Kubernetes on nodeport service, port 30066, for simple access
+- Endpoint exposed in Kubernetes on nodeport service, port 30066, for simple access

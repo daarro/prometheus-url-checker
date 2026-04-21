@@ -15,6 +15,7 @@ spec:
       containers:
         - name: app
           image: darro/url-checker:v1
+          imagePullPolicy: IfNotPresent
           ports:
             - name: metrics-port
               containerPort: 8000

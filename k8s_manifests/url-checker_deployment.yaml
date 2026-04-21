@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: url-checker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: url-checker
+  template:
+    metadata:
+      labels:
+        app: url-checker
+    spec:
+      containers:
+        - name: app
+          image: darro/url-checker:v1
+          ports:
+            - name: metrics-port
+              containerPort: 8000
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "200m"
+              memory: "128Mi"
+          volumeMounts:
+            - name: config
+              mountPath: /config
+          livenessProbe:
+            httpGet:
+              path: /metrics
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /metrics
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 15
+      volumes:
+        - name: config
+          configMap:
+            name: url-checker-config
+            items:
+              - key: urls
+                path: urls
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000

@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: url-checker-config
+data:
+  urls: |
+    https://google.com
+    https://example.com
+    https://store.steampowered.com
